@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Codefire.Storm</RootNamespace>
+    <AssemblyName>Codefire.Storm</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\DeleteAction.cs" />
+    <Compile Include="Actions\InsertAction.cs" />
+    <Compile Include="Actions\LoadAction.cs" />
+    <Compile Include="Actions\DatabaseAction.cs" />
+    <Compile Include="Actions\ReinstateAction.cs" />
+    <Compile Include="Actions\UpdateAction.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="StormContainer.cs" />
+    <Compile Include="Engine\EntityContainer.cs" />
+    <Compile Include="Engine\EntityModel.cs" />
+    <Compile Include="Engine\Inflector.cs" />
+    <Compile Include="Engine\InflectorRule.cs" />
+    <Compile Include="IContextInitializer.cs" />
+    <Compile Include="Mapping\InlineOverride.cs" />
+    <Compile Include="ModelBuilder.cs" />
+    <Compile Include="Engine\SqlDataProvider.cs" />
+    <Compile Include="IDataProvider.cs" />
+    <Compile Include="IMapStrategy.cs" />
+    <Compile Include="Engine\DefaultInterceptor.cs" />
+    <Compile Include="IInterceptor.cs" />
+    <Compile Include="Mapping\ColumnOption.cs" />
+    <Compile Include="Engine\DefaultStrategy.cs" />
+    <Compile Include="Mapping\EntityMapOverride.cs" />
+    <Compile Include="Mapping\IMapOverride.cs" />
+    <Compile Include="Querying\IEntityQuery.cs" />
+    <Compile Include="Querying\ISqlQuery.cs" />
+    <Compile Include="Querying\SqlDeleteQuery.cs" />
+    <Compile Include="Querying\SqlInsertQuery.cs" />
+    <Compile Include="Querying\SqlQuery.cs" />
+    <Compile Include="Querying\SqlQueryManager.cs" />
+    <Compile Include="Querying\SqlSelectQuery.cs" />
+    <Compile Include="Querying\SqlUpdateQuery.cs" />
+    <Compile Include="StormCommand.cs" />
+    <Compile Include="StormContext.cs" />
+    <Compile Include="Engine\CriteriaExpressionVisitor.cs" />
+    <Compile Include="Engine\ExpressionVisitor.cs" />
+    <Compile Include="Engine\PropertyExpressionVisitor.cs" />
+    <Compile Include="IDataCommand.cs" />
+    <Compile Include="IDataContext.cs" />
+    <Compile Include="Mapping\EntityConfigurator.cs" />
+    <Compile Include="Mapping\EntityMap.cs" />
+    <Compile Include="Engine\ColumnDescriptor.cs" />
+    <Compile Include="Mapping\IdMap.cs" />
+    <Compile Include="Engine\JoinDescriptor.cs" />
+    <Compile Include="Mapping\IdConfigurator.cs" />
+    <Compile Include="Mapping\JoinMap.cs" />
+    <Compile Include="Mapping\JoinConfigurator.cs" />
+    <Compile Include="Mapping\PropertyMap.cs" />
+    <Compile Include="Engine\QueryPlan.cs" />
+    <Compile Include="Mapping\PropertyConfigurator.cs" />
+    <Compile Include="Querying\EntityQueryValues.cs" />
+    <Compile Include="Querying\UpdateValueCollection.cs" />
+    <Compile Include="Querying\CriteriaCollection.cs" />
+    <Compile Include="Querying\InsertValueCollection.cs" />
+    <Compile Include="Querying\JoinCollection.cs" />
+    <Compile Include="Querying\OrderCollection.cs" />
+    <Compile Include="Querying\ComparisonOperator.cs" />
+    <Compile Include="Querying\JoinType.cs" />
+    <Compile Include="Querying\Join.cs" />
+    <Compile Include="Querying\QueryTemplate.cs" />
+    <Compile Include="Querying\QueryType.cs" />
+    <Compile Include="Querying\UpdateValue.cs" />
+    <Compile Include="Querying\CriteriaType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Querying\EntityQuery.cs" />
+    <Compile Include="Querying\Criteria.cs" />
+    <Compile Include="Querying\InsertValue.cs" />
+    <Compile Include="Querying\Order.cs" />
+    <Compile Include="Engine\SqlGenerator.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

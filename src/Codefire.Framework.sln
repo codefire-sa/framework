@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codefire", "Codefire\Codefire.csproj", "{9DDF5814-FD56-491F-B8A3-63FD13C316DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codefire.Storm", "Codefire.Storm\Codefire.Storm.csproj", "{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DDF5814-FD56-491F-B8A3-63FD13C316DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDF5814-FD56-491F-B8A3-63FD13C316DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDF5814-FD56-491F-B8A3-63FD13C316DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDF5814-FD56-491F-B8A3-63FD13C316DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A171C2-6975-4F7A-B4AB-5E14B3F8040C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
