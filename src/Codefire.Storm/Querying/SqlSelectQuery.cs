@@ -48,6 +48,66 @@ namespace Codefire.Storm.Querying
             return this;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public SqlSelectQuery Count()
+        {
+            Template.AggregateType = AggregateType.Count;
+            Template.AggregateColumn = "*";
+
+            return this;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public SqlSelectQuery Min(string column)
+        {
+            Template.AggregateType = AggregateType.Min;
+            Template.AggregateColumn = column;
+
+            return this;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public SqlSelectQuery Max(string column)
+        {
+            Template.AggregateType = AggregateType.Max;
+            Template.AggregateColumn = column;
+
+            return this;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public SqlSelectQuery Avg(string column)
+        {
+            Template.AggregateType = AggregateType.Avg;
+            Template.AggregateColumn = column;
+
+            return this;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public SqlSelectQuery Sum(string column)
+        {
+            Template.AggregateType = AggregateType.Sum;
+            Template.AggregateColumn = column;
+
+            return this;
+        }
+
         public SqlSelectQuery From(string tableName)
         {
             Template.TableName = tableName;
@@ -218,7 +278,7 @@ namespace Codefire.Storm.Querying
         {
             foreach (var columnName in columnList)
             {
-                Template.OrderBy.Add(columnName, true);
+                Template.OrderBy.Add(null, columnName, true);
             }
 
             return this;
@@ -233,7 +293,7 @@ namespace Codefire.Storm.Querying
         {
             foreach (var columnName in columnList)
             {
-                Template.OrderBy.Add(columnName, false);
+                Template.OrderBy.Add(null, columnName, false);
             }
 
             return this;

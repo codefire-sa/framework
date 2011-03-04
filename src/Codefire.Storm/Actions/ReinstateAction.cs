@@ -50,7 +50,7 @@ namespace Codefire.Storm.Actions
                 }
             }
 
-            updateQuery.Criteria.Add(CriteriaType.And, Model.Map.Id.ColumnName, ComparisonOperator.Equals, id);
+            updateQuery.Criteria.Add(CriteriaType.And, null, Model.Map.Id.ColumnName, ComparisonOperator.Equals, id);
 
             var cmd = Context.Provider.Generate(updateQuery);
             cmd.ExecuteNonQuery();

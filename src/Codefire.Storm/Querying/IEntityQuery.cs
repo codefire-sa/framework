@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Codefire.Collections;
 
 namespace Codefire.Storm.Querying
 {
@@ -25,5 +26,7 @@ namespace Codefire.Storm.Querying
 
         TEntity Single();
         List<TEntity> List();
+        PagedList<TEntity> PagedList(int pageNumber, int pageSize);
+        int Count();
     }
 }

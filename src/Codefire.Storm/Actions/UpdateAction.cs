@@ -45,7 +45,7 @@ namespace Codefire.Storm.Actions
             }
 
             var idValue = Model.GetId(entity);
-            updateQuery.Criteria.Add(CriteriaType.And, Model.Map.Id.ColumnName, ComparisonOperator.Equals, idValue);
+            updateQuery.Criteria.Add(CriteriaType.And, null, Model.Map.Id.ColumnName, ComparisonOperator.Equals, idValue);
 
             var cmd = Context.Provider.Generate(updateQuery);
             cmd.ExecuteNonQuery();

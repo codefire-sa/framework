@@ -6,6 +6,7 @@ namespace Codefire.Storm.Querying
     {
         #region [ Fields ]
 
+        private string _memberName;
         private string _columnName;
         private bool _ascending;
 
@@ -23,6 +24,15 @@ namespace Codefire.Storm.Querying
         #endregion
 
         #region [ Properties ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string MemberName
+        {
+            get { return _memberName; }
+            set { _memberName = value; }
+        }
 
         /// <summary>
         /// 

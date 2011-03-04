@@ -58,7 +58,7 @@ namespace Codefire.Storm.Engine
         protected override Expression VisitConstant(ConstantExpression c)
         {
             _value = c.Value;
-           
+
             return base.VisitConstant(c);
         }
 
@@ -86,10 +86,10 @@ namespace Codefire.Storm.Engine
             {
                 return e;
             }
-        
+
             var lambda = Expression.Lambda(e);
             var fn = lambda.Compile();
-            
+
             return Expression.Constant(fn.DynamicInvoke(null), e.Type);
         }
 
@@ -145,7 +145,7 @@ namespace Codefire.Storm.Engine
         private void AddCriteria(string columnName, ComparisonOperator comparison, object[] values)
         {
             var criteriaType = _criteriaTypeQueue.Dequeue();
-            _criteriaList.Add(criteriaType, columnName, comparison, values);
+            _criteriaList.Add(criteriaType, columnName, null, comparison, values);
         }
     }
 }

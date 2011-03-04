@@ -9,6 +9,7 @@ namespace Codefire.Storm.Querying
     {
         #region [ Fields ]
 
+        private string _memberName;
         private string _columnName;
         private CriteriaType _criteriaType;
         private ComparisonOperator _comparison;
@@ -27,6 +28,15 @@ namespace Codefire.Storm.Querying
         }
 
         #region [ Properties ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal string MemberName
+        {
+            get { return _memberName; }
+            set { _memberName = value; }
+        }
 
         /// <summary>
         /// 
@@ -181,7 +191,7 @@ namespace Codefire.Storm.Querying
             {
                 dataList.Add(item);
             }
-            
+
             return dataList.ToArray();
         }
 

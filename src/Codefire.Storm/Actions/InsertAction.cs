@@ -38,6 +38,13 @@ namespace Codefire.Storm.Actions
             var insertQuery = new QueryTemplate(QueryType.Insert);
             insertQuery.TableName = Model.Map.TableName;
 
+            object id = null;
+            if (!Model.Map.Id.IsAutoIncrement)
+            {
+                id = Model.GetId(entity);
+                insertQuery.InsertValues.Add(Model.Map.Id.ColumnName, id);
+            }
+
             foreach (var propertyItem in Model.Map.Properties)
             {
                 if ((propertyItem.Options & ColumnOptions.Insert) != ColumnOptions.Insert) continue;
@@ -46,12 +53,20 @@ namespace Codefire.Storm.Actions
                 insertQuery.InsertValues.Add(propertyItem.ColumnName, value);
             }
 
-            insertQuery.SelectIdentity = true;
+            if (Model.Map.Id.IsAutoIncrement)
+            {
+                insertQuery.SelectIdentity = true;
 
-            var cmd = Context.Provider.Generate(insertQuery);
-            var id = cmd.ExecuteScalar();
+                var cmd = Context.Provider.Generate(insertQuery);
+                id = cmd.ExecuteScalar();
 
-            Model.SetId(entity, id);
+                Model.SetId(entity, id);
+            }
+            else
+            {
+                var cmd = Context.Provider.Generate(insertQuery);
+                cmd.ExecuteNonQuery();
+            }
 
             return id;
         }
@@ -61,6 +76,15 @@ namespace Codefire.Storm.Actions
             var cmd = Context.CreateCommand(Model.Map.InsertProcedure, CommandType.StoredProcedure);
 
             var specialOptions = ColumnOptions.CreateUser | ColumnOptions.CreateDate | ColumnOptions.ModifyUser | ColumnOptions.ModifyDate | ColumnOptions.SoftDelete;
+
+            object id = null;
+            if (!Model.Map.Id.IsAutoIncrement)
+            {
+                id = Model.GetId(entity);
+
+                var paramName = Context.Provider.GetParameterName(Model.Map.Id.ColumnName);
+                cmd.AddParameter(paramName, id);
+            }
 
             foreach (var propertyItem in Model.Map.Properties)
             {
@@ -74,9 +98,17 @@ namespace Codefire.Storm.Actions
 
             var userParam = Context.Provider.GetParameterName(Model.Map.CurrentUserParameter);
             cmd.AddParameter(userParam, Context.CurrentUser);
-            var id = cmd.ExecuteScalar<object>();
 
-            Model.SetId(entity, id);
+            if (Model.Map.Id.IsAutoIncrement)
+            {
+                id = cmd.ExecuteScalar();
+
+                Model.SetId(entity, id);
+            }
+            else
+            {
+                cmd.ExecuteNonQuery();
+            }
 
             return id;
         }

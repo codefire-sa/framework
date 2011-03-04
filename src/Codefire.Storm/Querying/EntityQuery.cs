@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Codefire.Collections;
 using Codefire.Storm.Engine;
 using Codefire.Storm.Actions;
 
@@ -83,7 +84,7 @@ namespace Codefire.Storm.Querying
             visitor.Parse(expression);
 
             constraint.CriteriaType = CriteriaType.And;
-            constraint.ColumnName = visitor.Name;
+            constraint.MemberName = visitor.Name;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -97,7 +98,7 @@ namespace Codefire.Storm.Querying
         public IEntityQuery<TEntity> Where(string memberName, Criteria constraint)
         {
             constraint.CriteriaType = CriteriaType.And;
-            constraint.ColumnName = memberName;
+            constraint.MemberName = memberName;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -123,7 +124,7 @@ namespace Codefire.Storm.Querying
             visitor.Parse(expression);
 
             constraint.CriteriaType = CriteriaType.And;
-            constraint.ColumnName = visitor.Name; ;
+            constraint.MemberName = visitor.Name; ;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -137,7 +138,7 @@ namespace Codefire.Storm.Querying
         public IEntityQuery<TEntity> And(string memberName, Criteria constraint)
         {
             constraint.CriteriaType = CriteriaType.And;
-            constraint.ColumnName = memberName;
+            constraint.MemberName = memberName;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -163,7 +164,7 @@ namespace Codefire.Storm.Querying
             visitor.Parse(expression);
 
             constraint.CriteriaType = CriteriaType.Or;
-            constraint.ColumnName = visitor.Name; ;
+            constraint.MemberName = visitor.Name; ;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -177,7 +178,7 @@ namespace Codefire.Storm.Querying
         public IEntityQuery<TEntity> Or(string memberName, Criteria constraint)
         {
             constraint.CriteriaType = CriteriaType.Or;
-            constraint.ColumnName = memberName;
+            constraint.MemberName = memberName;
             _values.Criteria.Add(constraint);
 
             return this;
@@ -196,7 +197,7 @@ namespace Codefire.Storm.Querying
         {
             foreach (var memberName in memberList)
             {
-                _values.OrderBy.Add(memberName, true);
+                _values.OrderBy.Add(memberName, null, true);
             }
 
             return this;
@@ -211,7 +212,7 @@ namespace Codefire.Storm.Querying
         {
             foreach (var memberName in memberList)
             {
-                _values.OrderBy.Add(memberName, false);
+                _values.OrderBy.Add(memberName, null, false);
             }
 
             return this;
@@ -224,7 +225,7 @@ namespace Codefire.Storm.Querying
             foreach (var expression in expressionList)
             {
                 visitor.Parse(expression);
-                _values.OrderBy.Add(visitor.Name, true);
+                _values.OrderBy.Add(visitor.Name, null, true);
             }
 
             return this;
@@ -237,7 +238,7 @@ namespace Codefire.Storm.Querying
             foreach (var expression in expressionList)
             {
                 visitor.Parse(expression);
-                _values.OrderBy.Add(visitor.Name, false);
+                _values.OrderBy.Add(visitor.Name, null, false);
             }
 
             return this;
@@ -264,6 +265,30 @@ namespace Codefire.Storm.Querying
         public List<TEntity> List()
         {
             return _action.FindMany(_values);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public PagedList<TEntity> PagedList(int pageNumber, int pageSize)
+        {
+            _values.PageNumber = pageNumber;
+            _values.PageSize = pageSize;
+
+            var list = _action.FindMany(_values);
+            var count = _action.Aggregate<int>(_values, AggregateType.Count, "*");
+
+            return new PagedList<TEntity>(list, count, pageNumber, pageSize);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+            return _action.Aggregate<int>(_values, AggregateType.Count, "*");
         }
 
         #endregion

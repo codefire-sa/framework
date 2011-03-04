@@ -36,6 +36,22 @@ namespace Codefire.Storm.Engine
 
         private IDataCommand BuildSelect(QueryTemplate template)
         {
+            IDataCommand cmd = null;
+
+            if (template.AggregateType == AggregateType.None)
+            {
+                cmd = BuildStandardSelect(template);
+            }
+            else
+            {
+                cmd = BuildAggregateSelect(template);
+            }
+
+            return cmd;
+        }
+
+        private IDataCommand BuildStandardSelect(QueryTemplate template)
+        {
             var builder = new StringBuilder();
             var cmd = new StormCommand(_provider);
 
@@ -46,6 +62,23 @@ namespace Codefire.Storm.Engine
             GenerateJoins(builder, template);
             GenerateCriteria(builder, template, cmd);
             GenerateOrderBy(builder, template);
+
+            cmd.CommandText = builder.ToString();
+
+            return cmd;
+        }
+
+        private IDataCommand BuildAggregateSelect(QueryTemplate template)
+        {
+            var builder = new StringBuilder();
+            var cmd = new StormCommand(_provider);
+
+            _parameterCount = 0;
+
+            GenerateAggregate(builder, template);
+            GenerateFrom(builder, template);
+            GenerateJoins(builder, template);
+            GenerateCriteria(builder, template, cmd);
 
             cmd.CommandText = builder.ToString();
 
@@ -127,6 +160,13 @@ namespace Codefire.Storm.Engine
             }
         }
 
+        private void GenerateAggregate(StringBuilder builder, QueryTemplate template)
+        {
+            var aggregate = FormatAggregate(template.AggregateType);
+
+            builder.AppendFormat("SELECT {0}({1}) AS Value ", aggregate, template.AggregateColumn);
+        }
+
         private void GenerateInsert(StringBuilder builder, QueryTemplate template)
         {
             builder.AppendFormat("INSERT INTO {0} ", template.TableName);
@@ -138,7 +178,7 @@ namespace Codefire.Storm.Engine
                 if (!first) builder.Append(",");
 
                 builder.Append(valueItem.ColumnName);
-                
+
                 first = false;
             }
             builder.Append(") ");
@@ -159,7 +199,7 @@ namespace Codefire.Storm.Engine
 
                 first = false;
             }
-            
+
             builder.Append(") ");
         }
 
@@ -250,7 +290,7 @@ namespace Codefire.Storm.Engine
                 first = false;
             }
         }
-        
+
         private void GenerateOrderBy(StringBuilder builder, QueryTemplate template)
         {
             if (template.OrderBy.Count > 0)
@@ -316,7 +356,7 @@ namespace Codefire.Storm.Engine
 
             return paramName;
         }
-        
+
         private string FormatJoinType(JoinType value)
         {
             switch (value)
@@ -377,6 +417,25 @@ namespace Codefire.Storm.Engine
                     return "OR";
                 default:
                     return "AND";
+            }
+        }
+
+        private string FormatAggregate(AggregateType value)
+        {
+            switch (value)
+            {
+                case AggregateType.Count:
+                    return "COUNT";
+                case AggregateType.Min:
+                    return "MIN";
+                case AggregateType.Max:
+                    return "MAX";
+                case AggregateType.Avg:
+                    return "AVG";
+                case AggregateType.Sum:
+                    return "SUM";
+                default:
+                    return "";
             }
         }
     }

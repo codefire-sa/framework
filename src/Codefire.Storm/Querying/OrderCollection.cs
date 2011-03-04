@@ -10,9 +10,10 @@ namespace Codefire.Storm.Querying
         {
         }
 
-        public Order Add(string columnName, bool ascending)
+        public Order Add(string memberName, string columnName, bool ascending)
         {
             var orderItem = new Order();
+            orderItem.MemberName = memberName;
             orderItem.ColumnName = columnName;
             orderItem.Ascending = ascending;
 

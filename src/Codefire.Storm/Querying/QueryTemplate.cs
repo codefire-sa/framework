@@ -6,11 +6,13 @@ namespace Codefire.Storm.Querying
     public class QueryTemplate
     {
         private QueryType _queryType;
+        private AggregateType _aggregateType;
         private int _limit;
         private int _pageNumber;
         private int _pageSize;
         private bool _selectIdentity;
         private string _selectColumns;
+        private string _aggregateColumn;
         private string _tableName;
         private string _tableAlias;
         private InsertValueCollection _insertValues;
@@ -34,6 +36,12 @@ namespace Codefire.Storm.Querying
         {
             get { return _queryType; }
             set { _queryType = value; }
+        }
+
+        public AggregateType AggregateType
+        {
+            get { return _aggregateType; }
+            set { _aggregateType = value; }
         }
 
         public int Limit
@@ -64,6 +72,12 @@ namespace Codefire.Storm.Querying
         {
             get { return _selectColumns; }
             set { _selectColumns = value; }
+        }
+
+        public string AggregateColumn
+        {
+            get { return _aggregateColumn; }
+            set { _aggregateColumn = value; }
         }
 
         public string TableName
